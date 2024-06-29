@@ -20,10 +20,12 @@ export function TimerCircle(props: {
         svg.selectChildren().remove();
         svg.append('g')
             .attr('id', 'timer-arc-g')
-            .attr('transform', 'translate(32,32)');
+            .attr('transform', 'translate(32,32)')
+            .attr('filter', 'drop-shadow(0 0 2px red)');
+
         svg.append('g')
             .attr('id', 'timer-text-g')
-            .attr('transform', 'translate(32,32)');
+            .attr('transform', 'translate(200,200)');
     }, [])
 
     useEffect(() => {
@@ -31,7 +33,7 @@ export function TimerCircle(props: {
 
         const x = d3.scaleLinear()
             .domain([0, props.amount])
-            .range([-Math.PI/2, Math.PI / 2]);
+            .range([0, 2 * Math.PI]);
 
         const hrText = humanReadableTime(props.remaining);
         const svg = d3.select(svgEl.current);
@@ -40,6 +42,9 @@ export function TimerCircle(props: {
                 enter.append('text')
                     .attr('id', 'timer')
                     .attr('fill', 'black')
+                    .attr('text-anchor', 'middle')
+                    .attr('dominant-baseline', 'middle')
+                    .attr('font-size', '32')
                     .text(hrText)
                 ,
                 (update) => update
@@ -51,27 +56,25 @@ export function TimerCircle(props: {
             .join((enter) =>
                 enter.append('path')
                     .attr('stroke', 'black')
-                    .attr('transform', `translate(${(200-32)}, 200)`)
+                    .attr('transform', `translate(${(200 - 32)}, ${(200 - 32)})`)
+                    .attr('fill', 'rgb(200,0,0)')
+                    .attr('stroke-width', 0)
                     .attr("d", d3.arc()({
-                        innerRadius: 100,
+                        innerRadius: 164,
                         outerRadius: 200 - 32,
-                        startAngle: -Math.PI / 2,
+                        startAngle: x(0),
                         endAngle: x(props.remaining)
-                      }))
-                ,
+                    })),
                 (update) => update.attr("d", d3.arc()({
-                    innerRadius: 100,
+                    innerRadius: 164,
                     outerRadius: 200 - 32,
-                    startAngle: -Math.PI / 2,
+                    startAngle: x(0),
                     endAngle: x(props.remaining)
-                  }))
-                    
-                ,
+                })),
                 (exit) => exit
             );
     }, [props.remaining])
 
     return <svg ref={svgEl} width={400} height={400}>
-        {/* <g id="timer-g" transform="translate(32, 32)"></g> */}
     </svg>
 }

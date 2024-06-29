@@ -11,7 +11,7 @@ export function Timer() {
     async function renderTimer() {
         while (timer && timer.state === TimerState.STARTED) {
             setTimeRemaining(timer.remaining);
-            await nextAnimationFrame(5);
+            await nextAnimationFrame(1);
         }
         if (timer?.state === TimerState.DONE) {
             setTimeRemaining(timer.remaining);
