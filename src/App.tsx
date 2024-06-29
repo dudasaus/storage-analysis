@@ -1,4 +1,5 @@
 import './App.scss'
+import { Timer } from './components/Timer/Timer'
 
 function App() {
 
@@ -6,6 +7,7 @@ function App() {
     <>
       <div className="app-root">
         <h1>Hello</h1>
+        <Timer/>
       </div>
     </>
   )
