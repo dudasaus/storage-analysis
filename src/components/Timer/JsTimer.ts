@@ -33,8 +33,7 @@ export class JsTimer {
                 this.remaining = this.remaining - diff
                 this.lastTime = currentTime;
                 if (this.remaining <= 0) {
-                    this.remaining = 0;
-                    this.state = TimerState.DONE;
+                    this.done();
                 }
             }
             await new Promise((res) => {
@@ -48,5 +47,13 @@ export class JsTimer {
             this.state = TimerState.STOPPED;
             this.lastTime = null;
         }
+    }
+
+    done() {
+        if (this.state === TimerState.DONE) return;
+        this.remaining = 0;
+        this.state = TimerState.DONE;
+        const utterance = new SpeechSynthesisUtterance('Time is up');
+        window.speechSynthesis.speak(utterance);
     }
 }

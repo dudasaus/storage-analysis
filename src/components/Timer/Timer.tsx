@@ -52,7 +52,7 @@ export function Timer() {
             <button onClick={() => timer.stop()}>Stop</button>
         </div> : null}
         {timerAmount ? <>
-            <TimerCircle amount={timerAmount} remaining={timeRemaining}/>
+            <TimerCircle amount={timerAmount} remaining={timeRemaining} strokeWidth={4}/>
         </> : null}
     </>
 }
