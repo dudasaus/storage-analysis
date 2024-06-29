@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { JsTimer, TimerState } from "./JsTimer";
+import { TimerCircle } from "./TimerCircle/TimerCircle";
 
 export function Timer() {
     const [timerInputValue, setTimerInputValue] = useState('');
@@ -45,14 +46,13 @@ export function Timer() {
         {timer ? <div>
             <button onClick={() => {
                 if (timer.start()) {
-                    console.log('hello')
                     renderTimer();
                 }
             }}>Start</button>
             <button onClick={() => timer.stop()}>Stop</button>
         </div> : null}
         {timerAmount ? <>
-            <p>{timeRemaining} / {timerAmount}</p>
+            <TimerCircle amount={timerAmount} remaining={timeRemaining}/>
         </> : null}
     </>
 }

@@ -30,18 +30,11 @@ export class JsTimer {
             } else {
                 const currentTime = performance.now();
                 const diff = currentTime - this.lastTime;
-                console.log({
-                    reminaing: this.remaining,
-                    currentTime,
-                    lastTime: this.lastTime,
-                    diff: currentTime - this.lastTime,
-                })
                 this.remaining = this.remaining - diff
                 this.lastTime = currentTime;
                 if (this.remaining <= 0) {
                     this.remaining = 0;
                     this.state = TimerState.DONE;
-                    console.log('done');
                 }
             }
             await new Promise((res) => {
